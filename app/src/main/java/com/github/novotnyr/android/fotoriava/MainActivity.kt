@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
+import com.otaliastudios.cameraview.PictureResult
 
 class MainActivity : AppCompatActivity() {
     private lateinit var cameraView: CameraView
@@ -17,6 +19,11 @@ class MainActivity : AppCompatActivity() {
 
         cameraView = findViewById(R.id.cameraView)
         cameraView.setLifecycleOwner(this)
+        cameraView.addCameraListener(object : CameraListener() {
+            override fun onPictureTaken(result: PictureResult) {
+                result.toBitmap(lastPhotoImageView::setImageBitmap)
+            }
+        })
 
         lastPhotoImageView = findViewById(R.id.lastPhotoImageView)
     }
